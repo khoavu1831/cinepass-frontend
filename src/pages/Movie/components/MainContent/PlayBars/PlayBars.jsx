@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ActionButtons from "./ActionsButton"
+import movieSvg from "/movie.svg";
 
 function PlaysBar({ movie }) {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ function PlaysBar({ movie }) {
             <div className="md:pl-6 xl:min-w-40">
               <button className="bg-[#1a2c7e] w-full flex items-center gap-1 justify-around rounded-4xl px-3 py-1.5 lg:py-4 cursor-pointer">
                 <img
-                  src="movie.svg"
+                  src={movieSvg}
                   className="w-6 h-6 object-cover"
                 />
 

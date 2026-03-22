@@ -1,4 +1,5 @@
 import movieSvg from "/movie.svg";
+import vietnamPng from "/vietnam.png";
 
 function Footer() {
   return (
@@ -7,7 +8,7 @@ function Footer() {
         <div className="px-4 xl:px-5">
           <div className="flex flex-col py-8 max-xl:items-center xl:p-8">
             <button className="font-light bg-red-500 px-3 text-white flex justify-center items-center rounded-3xl max-sm:text-[12px] text-[15px] cursor-pointer w-full h-9.5 max-w-90 ">
-              <img src="vietnam.png" alt="" />
+              <img src={vietnamPng} alt="vietnam logo" />
               <h4 className="ml-1.5">Hoàng Sa & Trường Sa là của <span className="text-yellow-400">Việt Nam</span>!</h4>
             </button>
 
