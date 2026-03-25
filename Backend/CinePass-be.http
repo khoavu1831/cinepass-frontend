@@ -1,0 +1,6 @@
+@CinePass_be_HostAddress = http://localhost:5018
+
+GET {{CinePass_be_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
