@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import FilterRow from './FieldRow';
 
 const FILTER_DATA = {
-  countries: ['Tất cả', 'Trung Quốc', 'Âu Mỹ', 'Hàn Quốc', 'Việt Nam', 'Nhật Bản', 'Thái Lan', 'Trung Quốc', 'Âu Mỹ', 'Hàn Quốc', 'Việt Nam', 'Nhật Bản', 'Thái Lan', 'Trung Quốc', 'Âu Mỹ', 'Hàn Quốc', 'Việt Nam', 'Nhật Bản', 'Thái Lan'],
+  countries: ['Tất cả', 'Trung Quốc', 'Âu Mỹ', 'Hàn Quốc', 'Việt Nam', 'Nhật Bản', 'Thái Lan'],
   types: ['Tất cả', 'Phim lẻ', 'Phim bộ'],
   ratings: ['Tất cả', 'P', 'K', 'T13', 'T16', 'T18'],
   genres: ['Tất cả', 'Chính kịch', 'Hài hước', 'Hành động', 'Kinh dị', 'Cổ trang'],
@@ -10,16 +10,18 @@ const FILTER_DATA = {
   sort: ['Mới nhất', 'Điểm IMDb', 'Lượt xem']
 };
 
-function Fieldset() {
+function Fieldset({ onFilterChange, filters: initialFilters }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [filters, setFilters] = useState({
-    country: ['Tất cả'],
-    type: ['Tất cả'],
-    rating: ['Tất cả'],
-    genre: ['Tất cả'],
-    year: ['Tất cả'],
-    sort: 'Mới nhất'
-  });
+  const [filters, setFilters] = useState(
+    initialFilters || {
+      country: ['Tất cả'],
+      type: ['Tất cả'],
+      rating: ['Tất cả'],
+      genre: ['Tất cả'],
+      year: ['Tất cả'],
+      sort: 'Mới nhất'
+    }
+  );
 
   const handleSelect = (category, value) => {
     setFilters(prev => {
@@ -29,7 +31,6 @@ function Fieldset() {
 
       if (value === 'Tất cả') return { ...prev, [category]: ['Tất cả'] };
 
-      // Xử lý chọn nhiều
       let newSelection = Array.isArray(currentSelection) 
         ? currentSelection.filter(item => item !== 'Tất cả')
         : [];
@@ -43,6 +44,13 @@ function Fieldset() {
 
       return { ...prev, [category]: newSelection };
     });
+  };
+
+  const handleApplyFilter = () => {
+    if (onFilterChange) {
+      onFilterChange(filters);
+    }
+    setIsOpen(false);
   };
 
   return (
@@ -71,7 +79,10 @@ function Fieldset() {
           <hr className="border-gray-800 border-dashed" />
 
           <div className="flex justify-end p-4 gap-2">
-            <button className="bg-mainblue cursor-pointer hover:opacity-90 text-[14px] text-white py-2 px-6 rounded-full flex items-center gap-2 transition-colors">
+            <button 
+              onClick={handleApplyFilter}
+              className="bg-mainblue cursor-pointer hover:opacity-90 text-[14px] text-white py-2 px-6 rounded-full flex items-center gap-2 transition-colors"
+            >
               Lọc kết quả <i className="fa-solid fa-arrow-right"></i>
             </button>
 
