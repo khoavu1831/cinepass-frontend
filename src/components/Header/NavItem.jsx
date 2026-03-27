@@ -1,4 +1,5 @@
 import SubNav from "./SubNav"
+import { Link } from "react-router-dom";
 
 function NavItem({ label, href, data, col, activeNav, setActiveNav, variant = "desktop", responsive }) {
   const isOpen = activeNav === label;
@@ -11,13 +12,14 @@ function NavItem({ label, href, data, col, activeNav, setActiveNav, variant = "d
 
   return (
     <div className={`relative cursor-pointer ${variant === "mobile" ? "p-2 text-[13px]" : ""}`}>
-      <a
+      <Link
+        to={"/search"}
         className={`hover:text-mainblue ${variant === "mobile" ? "text-white" : " "}`}
         href={href}
         onClick={toggle}>
         {label}
         {data && <i className="fa-solid fa-caret-down ml-1"></i>}
-      </a>
+      </Link>
 
       {data && <SubNav data={data} isOpen={isOpen} col={col} responsive={responsive} />}
     </div>
