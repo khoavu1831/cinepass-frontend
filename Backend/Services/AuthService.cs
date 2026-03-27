@@ -1,18 +1,17 @@
-using CinePass_be.Data;
 using CinePass_be.DTOs.Auth;
 using CinePass_be.Models;
-using Microsoft.EntityFrameworkCore;
+using CinePass_be.Repositories;
 
 namespace CinePass_be.Services;
 
-public class AuthService(AppDbContext db, JwtService jwt)
+public class AuthService(IUserRepository userRepo, JwtService jwt)
 {
     public async Task<AuthResponse> RegisterAsync(RegisterRequest req)
     {
-        if (await db.Users.AnyAsync(u => u.Email == req.Email))
+        if (await userRepo.EmailExistsAsync(req.Email))
             throw new InvalidOperationException("Email da duoc su dung.");
 
-        if (await db.Users.AnyAsync(u => u.Username == req.Username))
+        if (await userRepo.UsernameExistsAsync(req.Username))
             throw new InvalidOperationException("Username da duoc su dung.");
 
         var user = new User
@@ -22,15 +21,15 @@ public class AuthService(AppDbContext db, JwtService jwt)
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password)
         };
 
-        db.Users.Add(user);
-        await db.SaveChangesAsync();
+        await userRepo.AddAsync(user);
+        await userRepo.SaveChangesAsync();
 
         return BuildResponse(user);
     }
 
     public async Task<AuthResponse> LoginAsync(LoginRequest req)
     {
-        var user = await db.Users.FirstOrDefaultAsync(u => u.Email == req.Email.ToLower())
+        var user = await userRepo.GetByEmailAsync(req.Email)
             ?? throw new InvalidOperationException("Email hoac mat khau khong dung.");
 
         if (!BCrypt.Net.BCrypt.Verify(req.Password, user.PasswordHash))
@@ -44,7 +43,7 @@ public class AuthService(AppDbContext db, JwtService jwt)
 
     public async Task<UserDto> GetMeAsync(Guid userId)
     {
-        var user = await db.Users.FindAsync(userId)
+        var user = await userRepo.GetByIdAsync(userId)
             ?? throw new InvalidOperationException("Khong tim thay nguoi dung.");
 
         return ToDto(user);

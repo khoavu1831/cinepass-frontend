@@ -1,5 +1,6 @@
 using System.Text;
 using CinePass_be.Data;
+using CinePass_be.Repositories;
 using CinePass_be.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,11 @@ builder.Services.AddCors(opt =>
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials()));
+
+// Repositories
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
 // Services
 builder.Services.AddScoped<JwtService>();
