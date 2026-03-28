@@ -3,6 +3,8 @@ import { labels } from "../../utils/seed";
 import NavItem from "./NavItem";
 import { Link } from "react-router-dom";
 import movieSvg from "/movie.svg";
+import Logo from "../Logo";
+import AuthModal from "../AuthModal/AuthModal";
 
 function Header() {
   const headerRef = useRef(null);
@@ -12,6 +14,7 @@ function Header() {
   const [activeNav, setActiveNav] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
   const [showMenuItems, setShowMenuItems] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   // Handle scroll header
   useEffect(() => {
@@ -69,13 +72,7 @@ function Header() {
 
 
             {/* Logo */}
-            <div className="cursor-pointer max-xl:ml-4">
-              <Link to={"/"} className="flex items-center">
-                <img className="h-13" src={movieSvg} alt="logo" />
-                <h3 className="font-semibold text-white text-[18px]">CinePass</h3>
-                <span className="font-mono text-gray-400 text-[12px]">pro</span>
-              </Link>
-            </div>
+            <Logo movieSvg={movieSvg} />
           </div>
 
           {/* SearchIcon <= 1280px */}
@@ -141,10 +138,13 @@ function Header() {
             </div>
 
             {/* Button - test link: /watch */}
-            <Link to={"/"} className="bg-white flex items-center rounded-3xl px-3 py-2.5 w-auto text-[13px] font-medium opacity-90 cursor-pointer hover:opacity-100">
+            <button
+              onClick={() => setShowAuthModal(true)}
+              className="bg-white flex items-center rounded-3xl px-3 py-2.5 w-auto text-[13px] font-medium opacity-90 cursor-pointer hover:opacity-100"
+            >
               <i className="fa-solid fa-user"></i>
               <h4 className="ml-1.5">Thành viên</h4>
-            </Link>
+            </button>
           </div>
         </nav>
 
@@ -155,10 +155,13 @@ function Header() {
             className="xl:hidden absolute top-full left-0 mt-1 w-full md:max-w-[320px] px-1.5 z-50"
           >
             <div className="bg-[#2b3561] rounded-[14px] flex flex-col py p-4">
-              <Link to={"/"} className="bg-white flex justify-center items-center rounded-3xl px-3 text-[13px] font-medium opacity-90 cursor-pointer hover:opacity-100 w-full h-9.5 ">
+              <button
+                onClick={() => setShowAuthModal(true)}
+                className="bg-white flex justify-center items-center rounded-3xl px-3 text-[13px] font-medium opacity-90 cursor-pointer hover:opacity-100 w-full h-9.5 "
+              >
                 <i className="fa-solid fa-user"></i>
                 <h4 className="ml-1.5">Thành viên</h4>
-              </Link>
+              </button>
 
               <div className="grid grid-cols-2 mt-4">
                 <NavItem label={"Phim Lẻ"} href={"/phimle"} activeNav={activeNav} setActiveNav={setActiveNav} variant="mobile" />
@@ -171,6 +174,10 @@ function Header() {
               </div>
             </div>
           </div>
+        )}
+
+        {showAuthModal && (
+          <AuthModal setShowAuthModal={setShowAuthModal} showAuthModal={showAuthModal} />
         )}
       </header>
     </>

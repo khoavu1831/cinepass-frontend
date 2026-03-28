@@ -1,3 +1,4 @@
+import Logo from "./Logo";
 import movieSvg from "/movie.svg";
 import vietnamPng from "/vietnam.png";
 
@@ -14,11 +15,7 @@ function Footer() {
 
             <div className="mt-4 flex max-xl:flex-col items-center">
               <div className="xl:pr-12">
-                <div className="flex items-center">
-                  <img className="h-13 xl:h-18" src={movieSvg} alt="logo" />
-                  <h3 className="font-semibold text-white text-[18px] xl:text-[28px]">CinePass</h3>
-                  <span className="font-mono text-gray-400 text-[12px] xl:text-[16px]">pro</span>
-                </div>
+                <Logo movieSvg={movieSvg} />
               </div>
 
               {/* Icons */}
