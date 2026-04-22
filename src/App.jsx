@@ -12,6 +12,7 @@ import AdminLayout from "./admin/components/AdminLayout"
 import AdminGuard from "./admin/components/AdminGuard"
 import UserManagement from "./admin/pages/UserManagement"
 import MovieManagement from "./admin/pages/MovieManagement"
+import CollectionManagement from "./admin/pages/CollectionManagement"
 
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/users" element={<UserManagement />} />
               <Route path="/admin/movies" element={<MovieManagement />} />
-              {/* <Route path="/admin/collections" element={<CollectionManagement />} /> */}
+              <Route path="/admin/collections" element={<CollectionManagement />} />
               {/* <Route path="/admin/settings" element={<Settings />} /> */}
             </Route>
           </Route>
