@@ -2,72 +2,72 @@
 @import "tailwindcss";
 
 @theme {
-    --font-poppins: "Poppins", "san-serif";
-    --color-mainblue: #5f9beb;
+  --font-poppins: "Poppins", "san-serif";
+  --color-mainblue: #5f9beb;
 
-    /* KEYFRAMES */
-    @keyframes modal-right {
-        0% {
-            transform: translateX(0);
-            opacity: 0
-        }
-
-        50% {
-            transform: translate(24rem, 10rem);
-            opacity: 0.8
-        }
-
-        100% {
-            transform: translateX(0);
-            opacity: 1
-        }
+  /* KEYFRAMES */
+  @keyframes modal-right {
+    0% {
+      transform: translateX(0);
+      opacity: 0
     }
 
-    @keyframes modal-left {
-        0% {
-            transform: translateX(0);
-            opacity: 0
-        }
-
-        50% {
-            transform: translate(-24rem, 10rem);
-            opacity: 0.8
-        }
-
-        100% {
-            transform: translateX(0);
-            opacity: 1
-        }
+    50% {
+      transform: translate(24rem, 10rem);
+      opacity: 0.8
     }
 
-    @keyframes modal-up {
-        0% {
-            transform: translateY(100%);
-            opacity: 0
-        }
+    100% {
+      transform: translateX(0);
+      opacity: 1
+    }
+  }
 
-        100% {
-            transform: translateY(0);
-            opacity: 1
-        }
+  @keyframes modal-left {
+    0% {
+      transform: translateX(0);
+      opacity: 0
     }
 
-    @keyframes modal-fadein {
-        0% {
-            opacity: 0;
-        }
-
-        100% {
-            opacity: 1;
-        }
+    50% {
+      transform: translate(-24rem, 10rem);
+      opacity: 0.8
     }
 
-    --animate-modal-right: modal-right 1s ease-in-out;
-    --animate-modal-left: modal-left 1s ease-in-out;
-    --animate-modal-up: modal-up 1s ease-in-out;
-    --animate-modal-fadein: modal-fadein 1s ease-in-out;
+    100% {
+      transform: translateX(0);
+      opacity: 1
+    }
+  }
+
+  @keyframes modal-up {
+    0% {
+      transform: translateY(100%);
+      opacity: 0
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1
+    }
+  }
+
+  @keyframes modal-fadein {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  --animate-modal-right: modal-right 1s ease-in-out;
+  --animate-modal-left: modal-left 1s ease-in-out;
+  --animate-modal-up: modal-up 1s ease-in-out;
+  --animate-modal-fadein: modal-fadein 1s ease-in-out;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }

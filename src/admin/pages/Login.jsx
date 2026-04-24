@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/useAuthStore";
 import axiosClient from "../../api/axiosClient";
 import toast from "react-hot-toast";
+import movieSvg from "/movie.svg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,10 +28,10 @@ const Login = () => {
     try {
       setLoading(true);
       const res = await axiosClient.post("/auth/login", { email, password });
-      
+
       const { userId, username, email: userEmail, role, accessToken, refreshToken } = res.data;
       const userData = { id: userId, username, email: userEmail, role };
-      
+
       if (userData.role !== "SUPERADMIN" && userData.role !== "ADMIN") {
         toast.error("Tài khoản không có quyền truy cập Admin");
         return;
@@ -54,8 +55,12 @@ const Login = () => {
 
       <div className="bg-[#1b1d29] border border-[#2b3561] rounded-2xl w-full max-w-md p-8 shadow-2xl z-10 relative">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/30">
-            <i className="fa-solid fa-film text-3xl text-white"></i>
+          <div className="w-16 h-16 my-4">
+            <img
+              src={movieSvg}
+              className="h-full w-full object-cover"
+              alt=""
+            />
           </div>
           <h1 className="text-2xl font-bold text-white tracking-wide">CinePass Admin</h1>
           <p className="text-gray-400 mt-2 text-sm">Đăng nhập hệ thống quản trị</p>
@@ -93,7 +98,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl py-3.5 mt-4 hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg shadow-blue-500/25 disabled:opacity-50 flex items-center justify-center"
+            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl py-3.5 mt-4 hover:cursor-pointer hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg shadow-blue-500/25 disabled:opacity-50 flex items-center justify-center"
           >
             {loading ? (
               <i className="fa-solid fa-circle-notch fa-spin text-xl"></i>

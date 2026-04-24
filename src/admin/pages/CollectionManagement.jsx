@@ -301,7 +301,8 @@ const CollectionManagement = () => {
                     >
                       <option value="standard_horizontal">Standard Horizontal (Carousel)</option>
                       <option value="standard_vertical">Standard Vertical (List)</option>
-                      <option value="top_movies">Top Movies (Numbered)</option>
+                      <option value="top_movies">Top Movies Group (Background)</option>
+                      <option value="top_10">Top 10 (Ranked/Numbered)</option>
                       <option value="hero_slider">Hero Slider (Banners)</option>
                       <option value="anime_slider">Anime Slider (2 Rows)</option>
                     </select>

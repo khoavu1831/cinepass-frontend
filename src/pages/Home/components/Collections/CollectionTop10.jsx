@@ -27,7 +27,7 @@ function CollectionTop10({ movies, titleCollection, type }) {
         <div className="max-md:hidden absolute w-full left-0 right-0 top-[40%] -translate-y-1/2 z-50 text-white text-4xl pointer-events-none">
           <button
             ref={preRef}
-            className={`absolute cursor-pointer pointer-events-auto -left-4 md:-left-10
+            className={`absolute cursor-pointer pointer-events-auto max-xl:hidden md:-left-6
               ${isBeginning ? "opacity-0" : "opacity-40 hover:opacity-100"}`}
           >
             <i className="fa-solid fa-chevron-left"></i>
@@ -35,7 +35,7 @@ function CollectionTop10({ movies, titleCollection, type }) {
 
           <button
             ref={nextRef}
-            className={`absolute cursor-pointer pointer-events-auto -right-4 md:-right-10
+            className={`absolute cursor-pointer pointer-events-auto max-xl:hidden md:-right-6
               ${isEnd ? "opacity-0" : "opacity-40 hover:opacity-100"}`}
           >
             <i className="fa-solid fa-chevron-right"></i>

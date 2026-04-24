@@ -15,12 +15,16 @@ const Sidebar = () => {
   return (
     <div className="w-64 bg-[#0f111a] border-r border-[#2b3561] flex flex-col transition-all duration-300">
       {/* Logo */}
-      <div className="h-20 flex items-center px-6 border-b border-[#2b3561]">
-        <Link to="/admin/dashboard" className="flex items-center gap-3">
-          <img src={movieSvg} alt="Logo" className="w-8 h-8" />
-          <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            CinePass Admin
-          </span>
+      <div className="h-17.5 flex items-center px-5 border-b border-[#2b3561]">
+        <Link
+          to="/admin/dashboard"
+          className="flex items-center"
+        >
+          <img src={movieSvg} alt="Logo" className="w-13 h-13" />
+          <div className="flex font-bold bg-mainblue bg-clip-text text-transparent items-center">
+            <span className="text-[18px] font-semibold text-white">CinePass</span>
+            <span className="text-[12px] font-mono text-gray-400">Admin</span>
+          </div>
         </Link>
       </div>
 
@@ -32,11 +36,10 @@ const Sidebar = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${
-                isActive 
-                  ? "bg-mainblue/20 text-mainblue font-semibold border border-mainblue/30" 
+              className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
+                  ? "bg-mainblue/20 text-mainblue font-semibold border border-mainblue/30"
                   : "text-gray-400 hover:bg-[#2b3561]/50 hover:text-white"
-              }`}
+                }`}
             >
               <i className={`${item.icon} text-lg w-5 text-center`}></i>
               <span className="text-sm">{item.name}</span>

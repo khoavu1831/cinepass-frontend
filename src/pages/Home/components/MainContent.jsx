@@ -24,7 +24,20 @@ function MainContent({ collections, rankingMovies }) {
     groupedCollections.push({ isTopMoviesGroup: true, items: currentTopMoviesGroup });
   }
 
-  let globalIndex = 0; // to keep track of the first collection for inserting ranking
+  // Determine where to insert the Ranking component (after the 3rd collection)
+  let runningTotal = 0;
+  let targetGroupIdx = -1;
+  for (let i = 0; i < groupedCollections.length; i++) {
+    runningTotal += groupedCollections[i].isTopMoviesGroup ? groupedCollections[i].items.length : 1;
+    if (runningTotal >= 3) {
+      targetGroupIdx = i;
+      break;
+    }
+  }
+  // If we have collections but fewer than 3, insert after the last group
+  if (targetGroupIdx === -1 && groupedCollections.length > 0) {
+    targetGroupIdx = groupedCollections.length - 1;
+  }
 
   return (
     <>
@@ -33,9 +46,6 @@ function MainContent({ collections, rankingMovies }) {
         {/* Loop through grouped dynamic collections */}
         {groupedCollections.map((group, groupIdx) => {
           if (group.isTopMoviesGroup) {
-            const firstIndexInGroup = globalIndex;
-            globalIndex += group.items.length;
-            
             return (
               <div key={`group-${groupIdx}`} className="collection-wrapper flex flex-col gap-6">
                 <div className="top-movies flex flex-col gap-6 rounded-t-2xl sm:px-4 sm:mx-4 pt-5 bg-linear-to-b from-[#2b3561]/80 to-[#1b1d29]/90 pb-8">
@@ -50,8 +60,8 @@ function MainContent({ collections, rankingMovies }) {
                   ))}
                 </div>
                 
-                {/* Insert Ranking after the first collection if available */}
-                {firstIndexInGroup === 0 && rankingMovies && rankingMovies.length > 0 && (
+                {/* Insert Ranking after the target group */}
+                {groupIdx === targetGroupIdx && rankingMovies && rankingMovies.length > 0 && (
                   <div className="ranking mt-6">
                     <Ranking movies={rankingMovies} />
                   </div>
@@ -60,8 +70,6 @@ function MainContent({ collections, rankingMovies }) {
             );
           } else {
             const collection = group.item;
-            const currentIndex = globalIndex;
-            globalIndex += 1;
 
             let ComponentToRender = null;
 
@@ -96,8 +104,8 @@ function MainContent({ collections, rankingMovies }) {
               <div key={collection.id} className="collection-wrapper flex flex-col gap-6">
                 {ComponentToRender}
                 
-                {/* Insert Ranking after the first collection if available */}
-                {currentIndex === 0 && rankingMovies && rankingMovies.length > 0 && (
+                {/* Insert Ranking after the target group */}
+                {groupIdx === targetGroupIdx && rankingMovies && rankingMovies.length > 0 && (
                   <div className="ranking mt-6">
                     <Ranking movies={rankingMovies} />
                   </div>
@@ -108,7 +116,7 @@ function MainContent({ collections, rankingMovies }) {
         })}
 
         {/* Fallback if collections is empty but we still have ranking */}
-        {collections.length === 0 && rankingMovies && rankingMovies.length > 0 && (
+        {groupedCollections.length === 0 && rankingMovies && rankingMovies.length > 0 && (
            <div className="ranking mt-6">
              <Ranking movies={rankingMovies} />
            </div>

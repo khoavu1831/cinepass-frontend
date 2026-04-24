@@ -13,7 +13,7 @@ const AdminHeader = () => {
   };
 
   return (
-    <header className="h-20 bg-[#0f111a] border-b border-[#2b3561] flex items-center justify-between px-8 z-10 shadow-sm shadow-black/50">
+    <header className="h-17.5 bg-[#0f111a] border-b border-[#2b3561] flex items-center justify-between px-8 z-10 shadow-sm shadow-black/50">
       <div className="flex items-center">
         {/* Search Bar - Optional for Global Search */}
         <div className="relative w-96 hidden md:block">
