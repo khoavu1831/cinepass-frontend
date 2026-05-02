@@ -150,7 +150,9 @@ function Header() {
             <div className="flex items-center gap-3">
               {isAuthenticated && user ? (
                 <div className="flex items-center gap-3 text-white">
-                  <span className="text-sm font-medium">{user.displayName}</span>
+                  <Link to={`/profile/${user.id || user.userId}`} className="text-sm font-medium hover:text-mainblue transition-colors">
+                    {user.displayName || user.username}
+                  </Link>
                   <button 
                     onClick={handleLogout}
                     className="bg-red-500 hover:bg-red-600 rounded-3xl px-3 py-1.5 text-[12px] font-medium cursor-pointer"
@@ -180,7 +182,9 @@ function Header() {
             <div className="bg-[#2b3561] rounded-[14px] flex flex-col py p-4">
               {isAuthenticated && user ? (
                 <div className="flex flex-col gap-2">
-                  <span className="text-white text-center text-sm font-medium">Xin chào, {user.displayName}</span>
+                  <Link to={`/profile/${user.id || user.userId}`} className="text-white text-center text-sm font-medium hover:text-mainblue">
+                    Xin chào, {user.displayName || user.username}
+                  </Link>
                   <button 
                     onClick={handleLogout}
                     className="bg-red-500 hover:bg-red-600 text-white rounded-3xl px-3 py-2 text-[13px] font-medium cursor-pointer w-full"

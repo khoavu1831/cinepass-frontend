@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home"
 import Movie from "./pages/Movie/Movie"
 import WatchMovie from "./pages/WatchMovie/WatchMovie"
 import Search from "./pages/Search/Search"
+import Profile from "./pages/Profile/Profile"
 import { Toaster } from "react-hot-toast"
 
 // Admin imports
@@ -26,10 +27,11 @@ function App() {
           <Route path="/movie/:id" element={<Movie />} />
           <Route path="/watch/:id" element={<WatchMovie />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/profile/:id" element={<Profile />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
-          
+
           <Route element={<AdminGuard />}>
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<AdminDashboard />} />

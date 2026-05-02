@@ -4,7 +4,8 @@ function Tab({ id, active, setActive }) {
     "episodes": "Tập phim",
     "gallery": "Galley",
     "cast": "Diễn viên",
-    "suggest": "Đề xuất"
+    "suggest": "Đề xuất",
+    "reviews": "Đánh giá"
   };
   const title = titles[id];
 

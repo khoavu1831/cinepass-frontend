@@ -20,8 +20,9 @@ function Signin({ onSwitchSignup, onSwitchForgetPassword, onSuccess }) {
       setLoading(true);
       const res = await axiosClient.post("/auth/login", { email, password });
       
-      const { user, accessToken, refreshToken } = res.data;
-      login(user, accessToken, refreshToken);
+      const { userId, username, email: userEmail, role, accessToken, refreshToken } = res.data;
+      const userData = { id: userId, userId, username, email: userEmail, role, displayName: username };
+      login(userData, accessToken, refreshToken);
       toast.success("Đăng nhập thành công");
       if (onSuccess) onSuccess();
     } catch (error) {

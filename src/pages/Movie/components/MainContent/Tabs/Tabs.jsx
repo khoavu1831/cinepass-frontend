@@ -8,6 +8,7 @@ import { mapSliderMovie } from "../../../../../mappers/sliderMovieMapper"
 import { Link } from "react-router-dom"
 import ItemComment from "./ItemComment"
 import { TMDB_IMAGE_URL } from "../../../../../api/tmdb"
+import ReviewsTab from "../ReviewsTab"
 
 function Tabs({ movie, isWatch }) {
   const [active, setActive] = useState("episodes");
@@ -47,6 +48,7 @@ function Tabs({ movie, isWatch }) {
           <Tab id="gallery" active={active} setActive={setActive} />
           <Tab id="cast" active={active} setActive={setActive} />
           <Tab id="suggest" active={active} setActive={setActive} />
+          <Tab id="reviews" active={active} setActive={setActive} />
         </div>
       </div>
 
@@ -184,6 +186,12 @@ function Tabs({ movie, isWatch }) {
               <Card key={m.id} movie={m} variant={"vertical"} />
             ))}
           </div>
+        </div>
+      )}
+
+      {active === "reviews" && movie?.id && (
+        <div className="versions mb-15">
+          <ReviewsTab movieId={movie.id} />
         </div>
       )}
 

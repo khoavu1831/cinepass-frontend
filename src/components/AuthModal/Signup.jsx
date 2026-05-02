@@ -23,7 +23,7 @@ function Signup({ onSwitchSignin }) {
     try {
       setLoading(true);
       await axiosClient.post("/auth/register", {
-        displayName,
+        username: displayName,
         email,
         password
       });

@@ -46,7 +46,9 @@ function PlaysBar({ movie }) {
                 />
 
                 <span className="text-white font-semibold">
-                  {movie?.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
+                  {(movie?.ratingAvg || movie?.vote_average)
+                    ? Number(movie.ratingAvg || movie.vote_average).toFixed(1)
+                    : "N/A"}
                 </span>
 
                 <a

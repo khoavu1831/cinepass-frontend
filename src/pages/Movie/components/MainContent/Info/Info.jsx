@@ -1,10 +1,8 @@
 import { useState } from "react";
-import RowDetailsMovie from "../Info/RowMovieDetails";
-import CastCol from "./CastCol";
-import { TMDB_IMAGE_URL } from "../../../../../api/tmdb";
+import RowDetailsMovie from "./RowMovieDetails";
 
 const formatRuntime = (runtime) => {
-  if (!runtime) return "--";
+  if (!runtime) return null;
   const h = Math.floor(runtime / 60);
   const m = runtime % 60;
   return h > 0 ? `${h}h ${m}m` : `${m}m`;
@@ -27,17 +25,33 @@ function Info({ movie, loading }) {
 
   if (!movie) return null;
 
-  const posterUrl = movie.poster_path
-    ? `${TMDB_IMAGE_URL}/w342${movie.poster_path}`
-    : "vietnam.png";
+  // Support both backend format and TMDB format
+  const posterUrl = movie.posterUrl || movie.poster_path
+    ? (movie.posterUrl || `https://image.tmdb.org/t/p/w342${movie.poster_path}`)
+    : "/vietnam.png";
 
-  const year = movie.release_date?.slice(0, 4) ?? "--";
-  const runtime = formatRuntime(movie.runtime);
-  const genres = movie.genres ?? [];
-  const cast = movie.credits?.cast?.slice(0, 9) ?? [];
-  const productionCompanies = movie.production_companies?.map(c => c.name) ?? [];
-  const countries = movie.production_countries?.map(c => c.name) ?? [];
-  const directors = movie.credits?.crew?.filter(p => p.job === "Director").map(p => p.name) ?? [];
+  const year = (movie.releaseDate || movie.release_date)?.slice(0, 4) ?? "--";
+  const runtime = formatRuntime(movie.duration || movie.runtime);
+
+  // Backend: genres is string[], TMDB: genres is [{id, name}]
+  const genres = Array.isArray(movie.genres)
+    ? movie.genres.map(g => (typeof g === "string" ? { id: g, name: g } : g))
+    : [];
+
+  // Backend: cast is "Actor1, Actor2, ..."
+  const castList = movie.cast
+    ? (typeof movie.cast === "string"
+      ? movie.cast.split(",").map(name => name.trim()).filter(Boolean)
+      : movie.cast)
+    : [];
+
+  // Director
+  const director = movie.director
+    || movie.credits?.crew?.find(p => p.job === "Director")?.name;
+
+  const overview = movie.description || movie.overview;
+
+  const ratingAvg = movie.ratingAvg || movie.vote_average;
 
   return (
     <>
@@ -56,9 +70,11 @@ function Info({ movie, loading }) {
             <h1>{movie.title}</h1>
           </div>
 
-          <div className="subTitle text-gray-400 xl:text-mainblue xl:mb-6 mt-1 text-[14px]">
-            <h4>{movie.original_title}</h4>
-          </div>
+          {movie.localTitle && (
+            <div className="subTitle text-gray-400 xl:text-mainblue xl:mb-6 mt-1 text-[14px]">
+              <h4>{movie.localTitle}</h4>
+            </div>
+          )}
 
           <div className="btn-more xl:hidden text-mainblue text-[14px] my-4 cursor-pointer">
             <button onClick={() => setToggle(!toggle)}>
@@ -84,9 +100,9 @@ function Info({ movie, loading }) {
                     <span>{runtime}</span>
                   </div>
                 )}
-                {movie.vote_average > 0 && (
+                {ratingAvg > 0 && (
                   <div className="border rounded-md px-1 py-1 lg:px-1.5 lg:py-1.5 bg-[#ffffff10]">
-                    <span>⭐ {movie.vote_average.toFixed(1)}</span>
+                    <span>⭐ {Number(ratingAvg).toFixed(1)}</span>
                   </div>
                 )}
               </div>
@@ -100,27 +116,31 @@ function Info({ movie, loading }) {
               </div>
             )}
 
-            {movie.overview && (
+            {overview && (
               <div className="flex flex-col text-[14px] mb-4">
                 <h2 className="text-white font-semibold my-2">Giới thiệu:</h2>
-                <span className="text-gray-500">{movie.overview}</span>
+                <span className="text-gray-500">{overview}</span>
               </div>
             )}
 
             {runtime && <RowDetailsMovie label={"Thời lượng"} contents={[runtime]} />}
-            {countries.length > 0 && <RowDetailsMovie label={"Quốc gia"} contents={countries} />}
-            {productionCompanies.length > 0 && <RowDetailsMovie label={"Sản xuất"} contents={productionCompanies} />}
-            {directors.length > 0 && <RowDetailsMovie label={"Đạo diễn"} contents={directors} />}
+            {director && <RowDetailsMovie label={"Đạo diễn"} contents={[director]} />}
+            {castList.length > 0 && <RowDetailsMovie label={"Diễn viên"} contents={castList.slice(0, 5)} />}
           </div>
 
-          {cast.length > 0 && (
+          {castList.length > 0 && (
             <div className="max-xl:hidden flex flex-col">
               <div className="text-white text-xl font-bold mb-4">
                 <h1>Diễn viên</h1>
               </div>
-              <div className="grid grid-cols-3 justify-items-center gap-3 gap-y-6">
-                {cast.map(person => (
-                  <CastCol key={person.id} person={person} />
+              <div className="flex flex-col gap-2">
+                {castList.slice(0, 9).map((name, i) => (
+                  <div key={i} className="flex items-center gap-2 text-white text-sm">
+                    <div className="w-8 h-8 rounded-full bg-mainblue flex items-center justify-center text-xs font-bold">
+                      {name[0]}
+                    </div>
+                    <span>{name}</span>
+                  </div>
                 ))}
               </div>
             </div>
